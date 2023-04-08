@@ -1,0 +1,48 @@
+.TH simple_shell
+
+.SH NAME
+hsh - a simple UNIX command line interpreter
+
+.SH SYNOPSIS
+
+simple_shell will take in a command or a string of commands and break them down to perform certain a task/tasks that are given.
+
+#include "shell.h"
+
+int main(int argc, char **argv)
+
+.SH DESCRIPTION
+
+A command line interpreter that reads, parses, and executes commands.
+
+.SH
+
+BUILT-IN COMMANDS
+
+.B
+env - prints the current environment
+
+.B
+exit - exits out of the shell
+
+.B
+setenv - defines the value of environment variables
+
+.B
+unsetenv - removes an environment variable from the environment
+
+.B
+cd - changes the current working directory
+
+.B
+alias - shortcuts for regularly used commands that are long
+
+.B
+help - provides information about available commands and the shell environment
+
+.B
+history - view the previously executed command
+
+.SH AUTHORS
+
+Dominick Keeling & Kortlan Blocker.
