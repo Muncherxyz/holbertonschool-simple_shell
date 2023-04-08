@@ -9,5 +9,5 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-
+#define DELIM "\t\n"
 #endif
