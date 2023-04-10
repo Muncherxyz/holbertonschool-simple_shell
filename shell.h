@@ -10,4 +10,10 @@
 #include <unistd.h>
 
 #define DELIM "\t\n"
+
+
+
+void execmd(char **argv);
+char *get_location(char *command);
+
 #endif
