@@ -56,10 +56,10 @@ int main(int ac, char **argv)\
 		}
 		argv[t] = NULL;
 
+		execmd(argv);
 
-		printf("%s\n", lineptr);
 
-
+		free(lineptr_cp);
 		free(lineptr)
 	}
 	return (0);
