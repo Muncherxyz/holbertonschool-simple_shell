@@ -6,9 +6,9 @@ int main(int ac, char **argv)\
 	char *lineptr = NULL, *lineptr_cp = NULL;
 	size_t n = 0;
 	ssize_t numchars_read;
-	const char *delim = " \n"
+	const char *delim = " \n";
 	int num_of_tokens = 0;
-	char *tokens;
+	char *token;
 	int t;
 
 	/*cant leave any of the variables used because of the flags being used*/
@@ -60,7 +60,8 @@ int main(int ac, char **argv)\
 
 
 		free(lineptr_cp);
-		free(lineptr)
+		free(lineptr);
 	}
 	return (0);
+}
 }
