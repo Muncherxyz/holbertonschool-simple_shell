@@ -4,16 +4,26 @@
  *
  **/
 void execmd(char **argv){
-    char *command = NULL;
+    
+  pid_t pid = fork();
 
-    if (argv){
-        /* get the command */
-        command = argv[0];
-
-        /* execute the command with execve */
-        if (execve(command, argv, NULL) == -1){
-            perror("Error:");
-        };
+    if (pid == -1) {
+        perror("Error: fork");
+        exit(1);
     }
-
+    else if (pid == 0) {
+        /* child process */
+        if (execve(argv[0], argv, NULL) == -1) {
+            perror("Error: execve");
+            exit(1);
+        }
+    }
+    else {
+        /* parent process */
+        int status;
+        if (waitpid(pid, &status, 0) == -1) {
+            perror("Error: waitpid");
+            exit(1);
+        }
+    }
 }
