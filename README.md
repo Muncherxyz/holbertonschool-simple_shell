@@ -35,7 +35,7 @@ Here are the instructions to compile and execute a shell program named hsh:
 ## Authors
 **Kortlan Blocker** | Github - Muncherxyz https://github.com/Muncherxyz
 
-**Dominick Keeling** | Github - dominickkeeling https://github.com/account
+**Dominick Keeling** | Github - DominickKeeling https://github.com/account
 
 
 
