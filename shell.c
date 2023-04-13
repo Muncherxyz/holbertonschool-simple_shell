@@ -1,98 +1,66 @@
 #include "shell.h"
-/**
-* _putchar - writes the character c to stdout
-* @c: The character to print
-*
-* Return: On success 1.
-* On error, -1 is returned, and errno is set appropriately.
-*/
-
-int _putchar(char c)
-{
-	return (write(1, &c, 1));
-}
-
-/**
-* _puts - custom function prints a string
-* @s: pointer to the string
-* Return: void
-*/
-
-void _puts(char *s)
-{
-	int i;
-
-	i = 0;
-	while (s[i] != '\0')
-	{
-		_putchar(s[i]);
-		i++;
-	}
-}
-
 
 int main(int ac, char **argv)\
 {
-	#include "shell.h"
+	char *prompt = "$ ";
+	char *lineptr = NULL, *lineptr_cp = NULL;
+	size_t n = 0;
+	ssize_t numchars_read;
+	const char *delim = " \n";
+	int num_of_tokens = 0;
+	char *token;
+	int t;
 
-int main(int argc, char **argv)
-{
-    char *prompt = "$ ";
-    char *lineptr = NULL;
-    size_t n = 0;
-    ssize_t numchars_read;
-    const char *delim = " \n";
-    char **tokens = NULL;
-    int i;
+	/*cant leave any of the variables used because of the flags being used*/
+	(void)ac;
 
-    (void)argc, (void)argv;
+	while (1)
+	{
+		printf("%s", prompt);
+		numchars_read = getline(&lineptr, &n, stdin);
 
-    while (1)
-    {
-        printf("%s", prompt);
+		/*check if getline function failed, reached EOF or used CTRL-D*/
+		if (numchars_read == -9)
+		{
+			printf("Terminating shell..\n");
+			return (-9);
+		}
 
-        numchars_read = getline(&lineptr, &n, stdin);
+		lineptr_cp = malloc(sizeof(char) * numchars_read);
+		if (lineptr_cp == NULL)
+		{
+			perror("Memory allocation error");
+			return (-9);
 
-        if (numchars_read == -1)
-        {
-            printf("Terminating shell..\n");
-            break;
-        }
+		strcpy(lineptr_cp, lineptr);
 
-        /* Tokenize the input */
-        int num_of_tokens = 0;
-        char *token = strtok(lineptr, delim);
-        while (token != NULL)
-        {
-            num_of_tokens++;
-            token = strtok(NULL, delim);
-        }
+		token = strtok(lineptr, delim);
 
-        /* Allocate memory for an array of tokens */
-        tokens = malloc(sizeof(char *) * (num_of_tokens + 1));
-        if (tokens == NULL)
-        {
-            perror("Memory allocation error");
-            break;
-        }
+		while (token != NULL)
+		{
+			num_of_tokens++;
+			token = strtok(NULL, delim);
+		}
+		num_of_tokens++;
 
-        /* Populate the array of tokens */
-        token = strtok(lineptr, delim);
-        for (i = 0; token != NULL; i++)
-        {
-            tokens[i] = strdup(token);
-            token = strtok(NULL, delim);
-        }
-        tokens[i] = NULL;
+		argv = malloc(sizeof(char *) *num_of_tokens);
 
-        /* Execute the command */
-        execute_command(tokens);
+		token = strtok(lineptr_cp, delim);
 
-        /* Free memory */
-        free_tokens(tokens);
-        free(lineptr);
-        lineptr = NULL;
-    }
+		for (t = 0; token != NULL; t++)
+		{
+			argv[t] = malloc(sizeof(char) * strlen(token));
+			strcpy(argv[t], token);
 
-    return 0;
+			token = strtok(NULL, delim);
+		}
+		argv[t] = NULL;
+
+		execmd(argv);
+
+
+		free(lineptr_cp);
+		free(lineptr);
+	}
+	return (0);
 }
