@@ -4,7 +4,6 @@
  * @str: char
  * Return: string
  */
-
 int print_string(char *str)
 {
 	return (write(STDOUT_FILENO, str, strlen(str)));
