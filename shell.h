@@ -1,7 +1,9 @@
 #ifndef SHELL_H
 #define SHELL_H
 
+
 #define BUFFER_SIZE 1024
+
 
 #include <stdlib.h> /* standard library */
 #include <stdio.h> /* standard input/output */
