@@ -3,8 +3,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+
 /**
- * get_env - gets environment for path
+ * _getenv - gets environment for path
  * @name: const char
  * Return: NULL
  */

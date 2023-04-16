@@ -1,4 +1,5 @@
 #include "shell.h"
+
 /**
  * double_free - free double pointer
  * @array: some double pointer array
