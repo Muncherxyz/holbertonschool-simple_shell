@@ -9,7 +9,7 @@
  */
 void builtfunc(char **buf, char **args, char **env, int *exstat)
 {
-  if (strcmp(args[0], "exit") == 0)
+  if (_strcmp(args[0], "exit") == 0)
     {
       if (args[1] == NULL)
 	{
