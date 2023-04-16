@@ -136,7 +136,7 @@ int main(int argc, char **argv)
             wait(&status);
         }
                        
-        double_free(array);
+        
         free(pathname);
         free(buffer);
     }
