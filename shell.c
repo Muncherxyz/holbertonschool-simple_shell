@@ -74,7 +74,7 @@ int main(int argc, char **argv)
             continue;
         }
         
-        pPath = _getenv("PATH");
+        pPath = get_env("PATH");
 
         pathtoken = strtok(pPath, ":");
         while (pathtoken)
