@@ -1,4 +1,8 @@
 #include "shell.h"
+#include <stdint.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
 /**
  * get_env - gets environment for path
  * @name: const char
