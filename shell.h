@@ -1,8 +1,6 @@
 #ifndef SHELL_H
 #define SHELL_H
 
-#define BUFFER_SIZE 1024
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -11,16 +9,13 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
+#define DELIM "\t\n"
 
-
-extern char **environ;
-
-#define _GNU_SOURCE
 
 int main(int argc, char **argv);
 
-void envbuiltin(char **environ);
-char *get_env(char *name);
+void execmd(char **argv);
+char *get_location(char *command);
 /* use your own _str files*/
 int _strlen(char *s);
 char *_strcpy(char *dest, char *src);
@@ -31,9 +26,12 @@ int _strncmp(char *s1, char *s2, int n);
 char *string_nconcat(char *s1, char *s2, unsigned int n);
 char *_strstr(char *haystack, char *needle);
 
-void builtfunc(char **buf, char **args, char **env, int *exstat);
+void print_prompt(char *prompt);
+int read_input(char **lineptr, size_t *n);
+int tokenize_input(char *lineptr, const char *delim, char ***argv);
+int execute_command(char **argv);
 
-void double_free(char **array);
+void builtfunc(char **buf, char **args, char **env, int *exstat);
 /* add _putchar and _puts */
 int _putchar(char c);
 void _puts(char *s);

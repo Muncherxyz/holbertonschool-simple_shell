@@ -1,111 +1,35 @@
 #include "shell.h"
 
-int main(int argc, char **argv)
+/**
+* main - the entry point of the program
+* @ac: integer that represents the num of command-line arguments
+* @argv: pointer to an array of strings
+* Return: 0
+*/
+int main(int ac, char **argv)
 {
-    size_t len = 1024;
-    char *buffer = NULL, *prompt, *array[1024], *token;
-    pid_t cpid;
-    int status, exstat = 0, i;
-    char *pPath, *pathtoken, *pathname;
-    
-    (void)argc, (void)argv;
-    
-    for (i = 0; i < 1024; i++)
-        array[i] = NULL;
-        
-    while (1)
-    {
-        if (isatty(STDIN_FILENO) == 1)
-        {
-            prompt = "($) ";
-            _puts(prompt);
-        }
+	char *prompt = "$ ", *lineptr = NULL, **cmd_argv;
+	size_t n = 0;
+	const char *delim = " \n";
+	int num_of_tokens;
 
-        if (getline(&buffer, &len, stdin) == -1)
-            break;
-            
-        token = strtok(buffer, "\n");
-        token = strtok(buffer, " ");
-        i = 0;
-        while (token)
-        {
-            array[i] = _strdup(token);
-            token = strtok(NULL, " ");
-            i++;
-        }
+	(void)ac;
 
-        if (_strcmp(buffer, "env") == 0)
-        {
-            envbuiltin(environ);
-            continue;
-        }
+	while (1)
+	{
+		print_prompt(prompt);
+		if (read_input(&lineptr, &n) == -9)
+			break;
+		num_of_tokens = tokenize_input(lineptr, delim, &cmd_argv);
+		if (num_of_tokens == -9)
+			break;
+		execute_command(cmd_argv);
+		for (int i = 0; i < num_of_tokens - 1; i++)
+			free(cmd_argv[i]);
+		free(cmd_argv);
+		free(lineptr);
+		n = 0;
+	}
 
-        if (_strcmp(buffer, "exit") == 0)
-        {
-            exit(exstat);
-            continue;
-        }
-        
-        pPath = get_env("PATH");
-
-        pathtoken = strtok(pPath, ":");
-        while (pathtoken)
-        {
-            pathname = malloc(sizeof(char) * 526);
-            if (!pathname)
-            {
-                perror("Error");
-                return (1);
-            }
-            pathname[0] = '\0';
-            if (!_strstr(array[0], "/"))
-            {
-                _strcat(pathname, pathtoken);
-                _strcat(pathname, "/");
-                _strcat(pathname, array[0]);
-            }
-            else
-            {
-                free(pathname);
-                pathname = _strdup(array[0]);
-                break;
-            }
-            if (access(pathname, X_OK) == 0)
-                break;
-            pathtoken = strtok(NULL, ":");
-            free(pathname);
-            pathname = NULL;
-        }
-        
-        if (pathtoken == NULL)
-            pathname = _strdup(array[0]);
-        
-        free(pPath);
-
-        cpid = fork();
-        if (cpid == -1)
-        {
-            perror("Error");
-            return (1);
-        }
-        
-        if (cpid == 0)
-        {
-            if (execve(pathname, array, environ) == -1)
-                perror("Error");
-            free(pathname);
-            free(array[0]);
-            exit(-1);
-        }
-        else
-        {
-            wait(&status);
-        }
-                       
-        double_free(array);
-        free(pathname);
-        free(buffer);
-    }
-
-    return (0);
+	return (0);
 }
