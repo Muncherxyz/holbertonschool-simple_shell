@@ -5,7 +5,7 @@
 #include <unistd.h>
 
 /**
- * _getenv - gets environment for path
+ * _get_env - gets environment for path
  * @name: const char
  * Return: NULL
  */
