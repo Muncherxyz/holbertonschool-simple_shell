@@ -1,5 +1,5 @@
 #include "shell.h"
-#include <stdlib.h> 
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 /**
@@ -11,16 +11,17 @@
 
 int _strlen(char *s)
 {
-int count = 0;
+	int count = 0;
 
-while (s[count] != '\0')
-{
-count++;
+	while (s[count] != '\0')
+	{
+		count++;
+	}
+	return (count);
 }
-return (count);
-}
+
 /**
-* *_strcpy - function that copies string pointed to by src, includes the '\0'
+* _strcpy - function that copies string pointed to by src, includes the '\0'
 * @dest: char type string
 * @src: char type string
 * Description: 0x05-pointers_arrays_strings/9-strcpy.c
@@ -118,23 +119,23 @@ char *_strdup(char *str)
 }
 
 /** _stncmp - compares two strings
- * @s1: character
- * @s2: character
- * @n: integer
- * Return: comparison or 0
+* @s1: character
+* @s2: character
+* @n: integer
+* Return: comparison or 0
 **/
 int _strncmp(char *s1, char *s2, int n)
 {
-        int a;
+	int a;
 
-        for (a = 0; s1[a] != '\0' || s2[a] != '\0'; a++)
-        {
+	for (a = 0; s1[a] != '\0' || s2[a] != '\0'; a++)
+	{
 		if (a == n)
 			break;
-                if (s1[a] != s2[a])
-                        return (s1[a] - s2[a]);
-        }
-        return (0);
+		if (s1[a] != s2[a])
+			return (s1[a] - s2[a]);
+	}
+	return (0);
 }
 
 /**
