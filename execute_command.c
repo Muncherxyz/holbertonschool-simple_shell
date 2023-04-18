@@ -2,9 +2,18 @@
 /**
 * execute_command - a function to execute the command
 * @argv: a pointer to an array of strings
-* Return: zero
+* Return: nothing
 */
 int execute_command(char **argv)
 {
-	return (0);
+	pid_t c_pid = fork();
+
+	if (c_pid != 0)
+		wait(NULL);
+	if (c_pid == 0)
+	{
+		execve(args[0], args, NULL);
+		perror("ERROR");
+		exit(1);
+	}
 }
