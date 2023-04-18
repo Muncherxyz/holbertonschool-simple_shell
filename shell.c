@@ -25,7 +25,7 @@ int main(int argc, char **argv, char **env)
                         continue;
 
 
-                no_nl(line);
+                nwdl(line);
 
 
                 args = parser(line);

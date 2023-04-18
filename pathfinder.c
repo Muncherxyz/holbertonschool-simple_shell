@@ -1,49 +1,50 @@
 #include "shell.h"
-/**
- * _path - function that prints environment PATH
- * @env: environment
- * @first: the first tokenized keyword (user inputted argument)
- * @input: the tokenized arguments
- * @ex_st: the exit status
- * Return: 0 if successful
- */
+
 int pathfinder(char *first, char **input, char **env, int *ex_st)
 {
-        int i;
-        char *temp, *left, *right;
-        char *new = NULL, *envcopy = NULL;
+    int i, j;
+    char *temp, *left, *right;
+    char *new = NULL;
+    char **path_dirs = '\0';
 
-        for (i = 0; env[i] != NULL; i++)
+    for (i = 0; env[i] != NULL; i++)
+    {
+        if (_strcmp(env[i], "PATH=") == 0)
         {
-                envcopy = _strdup(env[i]);
-                left = strtok(envcopy, "= \t");
-                temp = strtok(NULL, "= \t");
+            
+            temp = _strdup(env[i] + 5);
+            for (j = 0, left = temp; ; j++, left = NULL)
+            {
+                right = strtok(left, ":");
+                if (right == NULL)
+                    break;
+                path_dirs = realloc(path_dirs, (j + 1) * sizeof(char *));
+                path_dirs[j] = right;
+            }
+            free(temp);
 
-                if (_strcmp(left, "PATH") == 0)
+      
+            for (j = 0; j < path_dirs; j++)
+            {
+                new = pathstr(path_dirs[j], first);
+                if (access(new, X_OK) == 0)
                 {
-                        right = strtok(temp, ": \t");
-                        while (right)
-                        {
-                                new = pathstr(right, first);
-
-                                if (access(new, X_OK) == 0)
-                                {
-                                        if (fork() == 0)
-                                                execve(new, input, NULL);
-
-                                        else
-                                                wait(NULL);
-                                        *ex_st = 0;
-                                        free(new);
-                                        free(envcopy);
-                                        return (0);
-                                }
-                                right = strtok(NULL, ": \t");
-                                free(new);
-                        }
+                    if (fork() == 0)
+                        execve(new, input, NULL);
+                    else
+                        wait(NULL);
+                    *ex_st = 0;
+                    free(new);
+                    free(path_dirs);
+                    return 0;
                 }
-                free(envcopy);
-        }
-        return (2);
-}
+                free(new);
+            }
 
+            free(path_dirs);
+            break;
+        }
+    }
+
+    return 2;
+}

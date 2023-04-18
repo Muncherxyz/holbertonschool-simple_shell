@@ -13,7 +13,6 @@ int pathfinder(char *first, char **input, char **env, int *ex_st);
 
 
 int printenv(char **env, int *ex_st);
-char *cpy_env(char **env);
 
 
 void builtins(char *line, char **args, char **env, int *ex_st);
@@ -34,8 +33,7 @@ char **parser(char *l);
 void print_int(int *tal);
 
 
-void no_nl(char *l);
-void free_grid(char **grid, int height);
+void nwdl(char *l);
 int special_char(char *buffer, ssize_t bytes, int *ex_st);
 
 #endif
