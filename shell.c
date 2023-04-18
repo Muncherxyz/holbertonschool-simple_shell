@@ -31,10 +31,15 @@ int main(int ac, char **argv)
 
 		print_prompt(prompt);
 		if (read_input(&lineptr, &n) == -9)
+		{
 			break;
+		}
 		num_of_tokens = tokenize_input(lineptr, delim, &cmd_argv);
 		if (num_of_tokens == -9)
+		{
 			break;
+		}
+
 		execute_command(cmd_argv);
 		for (int i = 0; i < num_of_tokens - 1; i++)
 			free(cmd_argv[i]);
