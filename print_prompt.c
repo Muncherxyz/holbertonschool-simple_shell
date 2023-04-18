@@ -5,7 +5,7 @@
 * Return: nothing
 */
 
-void print_prompt(char *prompt) 
+void print_prompt(char *prompt)
 {
-    printf("%s", prompt);
+	_puts("%s", prompt);
 }
