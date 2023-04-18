@@ -7,5 +7,5 @@
 
 void print_prompt(char *prompt)
 {
-	_puts("%s", prompt);
+	printf("%s", prompt);
 }
