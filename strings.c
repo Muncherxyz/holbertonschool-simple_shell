@@ -1,174 +1,108 @@
 #include "shell.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-/**
-* _strlen - returns the length of string
-* @s: the string being passed
-* Description: 0x05-pointers_arrays_strings/2-strlen.c
-* Return: the length of the string
-**/
 
+/**
+ * _strlen - gives length of a string
+ * @s: string
+ * Return: returns length of string
+ */
 int _strlen(char *s)
 {
-	int count = 0;
+	int l = 0;
 
-	while (s[count] != '\0')
-	{
-		count++;
-	}
-	return (count);
+	while (s[l] != '\0')
+		l++;
+
+	return (l);
 }
 
-/**
-* _strcpy - function that copies string pointed to by src, includes the '\0'
-* @dest: char type string
-* @src: char type string
-* Description: 0x05-pointers_arrays_strings/9-strcpy.c
-* Return: Pointer to `dest`
-**/
-
-char *_strcpy(char *dest, char *src)
-{
-	int i;
-
-	for (i = 0; src[i] != '\0'; i++)
-	{
-		dest[i] = src[i];
-	}
-	dest[i] = '\0';
-	return (dest);
-}
 
 /**
-* _strcat - function that concatenates two strings
-* @dest: the string being concatenated
-* @src: the string being concatenated
-* Description: 0x06-pointers_arrays_strings/0-strcat.c
-* Return: dest
-**/
-
-char *_strcat(char *dest, char *src)
-{
-	int i;
-	int s;
-	int n;
-
-	for (s = 0; src[s] != '\0'; s++)
-	{
-		;
-	}
-	for (n = 0; dest[n] != '\0'; n++)
-	{
-		;
-	}
-	for (i = 0; i <= s ; i++)
-	{
-		*(dest + (n + i)) = src[i];
-	}
-	return (dest);
-}
-
-/**
-* _strcmp - comparing two strings
-* @s1: string
-* @s2: string
-* Description: 0x06-pointers_arrays_strings/3-strcmp.c
-* Return: 0
-**/
-
+ * _strcmp - compares two strings
+ * @s1: string 1
+ * @s2: string 2
+ * Return: comparison of two strings
+ */
 int _strcmp(char *s1, char *s2)
+{
+
+	while (*s1)
+	{
+		if (*s1 != *s2)
+			break;
+		s1++;
+		s2++;
+	}
+	return (*s1 - *s2);
+}
+
+
+/**
+ * _strcpy - copies string to another string
+ * @dest: string 1
+ * @src: string 2
+ * Return: string copy
+ */
+char *_strcpy(char *dest, char *src)
 {
 	int a;
 
-	for (a = 0; s1[a] != '\0' || s2[a] != '\0'; a++)
-	{
-		if (s1[a] != s2[a])
-			return (s1[a] - s2[a]);
-	}
-	return (0);
+	for (a = 0; a <= _strlen(src); a++)
+		dest[a] = src[a];
+	return (dest);
 }
 
+
 /**
-* _strdup - Duplicate a string using malloc
-* @str: string to duplicate
-* Description: 0x0B-malloc_free/1-strdup.c
-* Return: Pointer to a the new duped string
-**/
+ * _strdup - function that returns a pointer to a newly allocated space in
+ * memory, which contains a copy of the string given as a parameter
+ * @str: - Char string to be copied
+ * Return: Char pointer to the duplicated string. Return NULL if insufficient
+ * memory was available to array or if array is NULL
+ */
 
 char *_strdup(char *str)
 {
-	char *a;
-	int i, c;
+	char *dup;
+
+	int i, l;
 
 	if (str == NULL)
 		return (NULL);
 
+	l = 0;
+
 	for (i = 0; str[i] != '\0'; i++)
-		;
+		l++;
 
-	a = malloc(i * sizeof(*a) + 1);
-	if (a == NULL)
+	dup = malloc(sizeof(char) * l + 1);
+
+	if (dup == NULL)
 		return (NULL);
 
-	for (c = 0; c < i; c++)
-		a[c] = str[c];
-	a[c] = '\0';
+	for (i = 0; i < l ; i++)
+		dup[i] = str[i];
 
-	return (a);
+	dup[l] = '\0';
+
+	return (dup);
+
 }
 
-/**
-* _stncmp - compares two strings
-* @s1: character
-* @s2: character
-* @n: integer
-* Return: comparison or 0
-**/
-int _strncmp(char *s1, char *s2, int n)
-{
-	int a;
-
-	for (a = 0; s1[a] != '\0' || s2[a] != '\0'; a++)
-	{
-		if (a == n)
-			break;
-		if (s1[a] != s2[a])
-			return (s1[a] - s2[a]);
-	}
-	return (0);
-}
 
 /**
- * string_nconcat - concatenate two strings
- * @s1: character
- * @s2: character
- * @n: unsigned integer
- * Return: new string, or NULL
+ * _strcat - concatenates two strings
+ * @dest: string 1
+ * @src: string 2
+ * Return: concatenated string with overwritten null byte
  */
-
-char *string_nconcat(char *s1, char *s2, unsigned int n)
+char *_strcat(char *dest, char *src)
 {
-	char *newstring;
-	int s1len = 0;
-	unsigned int i;
-	unsigned int j;
+	int len = _strlen(dest);
+	int i;
 
-	if (s1 == NULL)
-		s1 = "";
-	if (s2 == NULL)
-		s2 = "";
-	while (s1[s1len] != '\0')
-		s1len++;
+	for (i = 0; src[i] != '\0'; i++)
+		dest[len + i] = src[i];
+	dest[len + i] = '\0';
 
-	newstring = malloc(sizeof(char) * (s1len + n + 1));
-
-	if (newstring == NULL)
-		return (NULL);
-	for (i = 0; s1[i] != '\0'; i++)
-		newstring[i] = s1[i];
-	for (j = 0; j < n && s2[j] != '\0'; i++, j++)
-		newstring[i] = s2[j];
-	newstring[i] = ('\0');
-	return (newstring);
+	return (dest);
 }

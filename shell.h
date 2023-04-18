@@ -9,32 +9,33 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-#define DELIM "\t\n"
-/*extern char **environ;*/
-extern char **environ; 
-int main(int argc, char **argv);
+int pathfinder(char *first, char **input, char **env, int *ex_st);
 
-void execmd(char **argv);
-char *get_location(char *command);
-/* use your own _str files*/
+
+int printenv(char **env, int *ex_st);
+char *cpy_env(char **env);
+
+
+void builtins(char *line, char **args, char **env, int *ex_st);
+void execute_command(int status, char **args, int *ex_st, int *tal);
+
+
 int _strlen(char *s);
+char *_strdup(char *str);
+int _strcmp(char *s1, char *s2);
 char *_strcpy(char *dest, char *src);
 char *_strcat(char *dest, char *src);
-int _strcmp(char *s1, char *s2);
-char *_strdup(char *str);
-int _strncmp(char *s1, char *s2, int n);
-char *string_nconcat(char *s1, char *s2, unsigned int n);
-char *_strstr(char *haystack, char *needle);
-char *_getline(void);
 
-void print_prompt(char *prompt);
-int read_input(char **lineptr, size_t *n);
-int tokenize_input(char *lineptr, const char *delim, char ***argv);
-int execute_command(char **argv);
 
-void builtfunc(char **buf, char **args, char **env, int *exstat);
-/* add _putchar and _puts */
 int _putchar(char c);
-void _puts(char *s);
+void print_str(char *s);
+char *pathstr(char *right, char *first);
+char **parser(char *l);
+void print_int(int *tal);
+
+
+void no_nl(char *l);
+void free_grid(char **grid, int height);
+int special_char(char *buffer, ssize_t bytes, int *ex_st);
 
 #endif

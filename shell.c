@@ -1,52 +1,52 @@
 #include "shell.h"
 
-/**
-* main - the entry point of the program
-* @ac: integer that represents the num of command-line arguments
-* @argv: pointer to an array of strings
-* Return: 0
-*/
-int main(int ac, char **argv)
+int main(int argc, char **argv, char **env)
 {
-	char *prompt = "$ ", *lineptr = NULL, **cmd_argv;
-	size_t n = 0;
-	const char *delim = " \n";
-	int num_of_tokens;
-	int fd = fileno(stdout);
+        char *prompt = "($)";
+        char *line = NULL;
+        char **args = NULL;
+        int i = 0, status = 0, arg_num = 0;
+        static int exit_stat, count;
+        size_t len = 0;
+        ssize_t read = 0;
+        (void)argc, (void)**argv;
 
-	(void)ac;
+        while (1)
+        {
 
-	while (1)
-	{
-		if (isatty(fd))
-		{
-			_puts("stdout is a terminal device.\n");
-		}
-		else
-		{
-			_puts("stdout is not a terminal device.\n");
-		}
-		return (0);
-		}
+                if (isatty(STDIN_FILENO))
+                        write(STDOUT_FILENO, prompt, 6);
 
-		print_prompt(prompt);
-		if (read_input(&lineptr, &n) == -9)
-		{
-			break;
-		}
-		num_of_tokens = tokenize_input(lineptr, delim, &cmd_argv);
-		if (num_of_tokens == -9)
-		{
-			break;
-		}
 
-		execute_command(cmd_argv);
-		for (int i = 0; i < num_of_tokens - 1; i++)
-			free(cmd_argv[i]);
-		free(cmd_argv);
-		free(lineptr);
-		n = 0;
-	}
+                read = getline(&line, &len, stdin);
 
-	return (0);
+
+                if (special_char(line, read, &exit_stat) == 127)
+                        continue;
+
+
+                no_nl(line);
+
+
+                args = parser(line);
+
+
+                for (i = 0; args[i]; i++)
+                        arg_num++;
+
+
+                builtins(line, args, env, &exit_stat);
+
+
+                status = pathfinder(args[0], args, env, &exit_stat);
+
+
+                execute_command(status, args, &exit_stat, &count);
+
+
+                fflush(stdin);
+        }
+       free(line);
+
+        return 0;
 }
