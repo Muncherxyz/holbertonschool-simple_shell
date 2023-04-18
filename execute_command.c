@@ -1,7 +1,7 @@
 #include "shell.h"
 /**
 * execute_command - a function to execute the command
-* @argv: a pointer to an array of strings
+* @args: a pointer to an array of strings
 * Return: nothing
 */
 int execute_command(char **args)
