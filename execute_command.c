@@ -16,4 +16,5 @@ int execute_command(char **args)
 		perror("ERROR");
 		exit(1);
 	}
+	return (0);
 }

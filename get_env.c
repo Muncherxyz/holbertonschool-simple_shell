@@ -14,7 +14,6 @@ char *get_env(char *name)
 {
 	int i;
 	char *pathvalue;
-	char *envvalue;
 
 	for (i = 0; environ[i] != NULL; i++)
 	{

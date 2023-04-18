@@ -10,8 +10,8 @@
 #include <unistd.h>
 
 #define DELIM "\t\n"
-
-
+/*extern char **environ;*/
+extern char **environ; 
 int main(int argc, char **argv);
 
 void execmd(char **argv);
