@@ -20,11 +20,11 @@ int main(int ac, char **argv)
 	{
 		if (isatty(fd))
 		{
-			_putchar("stdout is a terminal device.\n");
+			_puts("stdout is a terminal device.\n");
 		}
 		else
 		{
-			_putchar("stdout is not a terminal device.\n");
+			_puts("stdout is not a terminal device.\n");
 		}
 		return (0);
 		}
