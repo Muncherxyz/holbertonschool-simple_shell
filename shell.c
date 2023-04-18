@@ -28,7 +28,7 @@ int main(int ac, char **argv)
 		}
 		return (0);
 		}
-			
+
 		print_prompt(prompt);
 		if (read_input(&lineptr, &n) == -9)
 			break;
