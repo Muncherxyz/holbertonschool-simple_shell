@@ -12,11 +12,23 @@ int main(int ac, char **argv)
 	size_t n = 0;
 	const char *delim = " \n";
 	int num_of_tokens;
+	int fd = fileno(stdout);
 
 	(void)ac;
 
 	while (1)
 	{
+		if (isatty(fd))
+		{
+			_putchar("stdout is a terminal device.\n");
+		}
+		else
+		{
+			_putchar("stdout is not a terminal device.\n");
+		}
+		return (0);
+		}
+			
 		print_prompt(prompt);
 		if (read_input(&lineptr, &n) == -9)
 			break;
