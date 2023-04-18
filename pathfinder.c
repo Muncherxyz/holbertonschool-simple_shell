@@ -24,7 +24,7 @@ int pathfinder(char *first, char **input, char **env, int *ex_st)
             free(temp);
 
       
-            for (j = 0; j < path_dirs; j++)
+            for (j = 0; j < i; j++)
             {
                 new = pathstr(path_dirs[j], first);
                 if (access(new, X_OK) == 0)
