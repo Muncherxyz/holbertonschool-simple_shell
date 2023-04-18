@@ -4,7 +4,7 @@
 * @argv: a pointer to an array of strings
 * Return: nothing
 */
-int execute_command(char **argv)
+int execute_command(char **args)
 {
 	pid_t c_pid = fork();
 
